@@ -23,7 +23,7 @@ TELLO_ADDRESS = (TELLO_IP, TELLO_PORT)
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # 自ホストで使用するIPアドレスとポート番号を設定
-sock.bind(('0.0.0.0', 8880))
+sock.bind(('0.0.0.0', 8888))
 
 # 受信用スレッドの作成
 thread  = threading.Thread(target=udp_receiver)
