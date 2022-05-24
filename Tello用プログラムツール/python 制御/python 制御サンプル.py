@@ -1,30 +1,31 @@
+ï»¿''' å‚è€ƒå…ˆWeb:https://algorithm.joho.info/programming/python/tello-python-command/ '''
 import threading 
 import socket
 
 
-# Tello‚©‚ç‚ÌƒŒƒXƒ|ƒ“ƒXóM
+# Telloã‹ã‚‰ã®ãƒ¬ã‚¹ãƒãƒ³ã‚¹å—ä¿¡
 def udp_receiver():
     count = 0
     while True: 
         try:
-            # ƒNƒ‰ƒCƒAƒ“ƒg‚©‚ç‚ÌƒƒbƒZ[ƒW‚ÌóM‚ğó•tŠJn(ƒRƒlƒNƒVƒ‡ƒ“ƒŒƒXŒ^)
+            # ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã‹ã‚‰ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å—ä¿¡ã‚’å—ä»˜é–‹å§‹(ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³ãƒ¬ã‚¹å‹)
             data, server = sock.recvfrom(1518)
         except Exception:
             print ('\nExit . . .\n')
             break
 
-# Tello‘¤‚Ìƒ[ƒJƒ‹IPƒAƒhƒŒƒX(ƒfƒtƒHƒ‹ƒg)Aˆ¶æƒ|[ƒg”Ô†(ƒRƒ}ƒ“ƒhƒ‚[ƒh—p)
+# Telloå´ã®ãƒ­ãƒ¼ã‚«ãƒ«IPã‚¢ãƒ‰ãƒ¬ã‚¹(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ)ã€å®›å…ˆãƒãƒ¼ãƒˆç•ªå·(ã‚³ãƒãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ç”¨)
 TELLO_IP = '192.168.10.1'
 TELLO_PORT = 8889
 TELLO_ADDRESS = (TELLO_IP, TELLO_PORT)
 
-# UDP’ÊMƒ\ƒPƒbƒg‚Ìì¬
+# UDPé€šä¿¡ã‚½ã‚±ãƒƒãƒˆã®ä½œæˆ
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-# ©ƒzƒXƒg‚Åg—p‚·‚éIPƒAƒhƒŒƒX‚Æƒ|[ƒg”Ô†‚ğİ’è
-sock.bind(('', TELLO_PORT))
+# è‡ªãƒ›ã‚¹ãƒˆã§ä½¿ç”¨ã™ã‚‹IPã‚¢ãƒ‰ãƒ¬ã‚¹ã¨ãƒãƒ¼ãƒˆç•ªå·ã‚’è¨­å®š
+sock.bind(('0.0.0.0', 8880))
 
-# óM—pƒXƒŒƒbƒh‚Ìì¬
+# å—ä¿¡ç”¨ã‚¹ãƒ¬ãƒƒãƒ‰ã®ä½œæˆ
 thread  = threading.Thread(target=udp_receiver)
 thread.daemon = True
 thread .start()
@@ -34,17 +35,17 @@ while True:
     try:
         msg = input("")
 
-        # ƒƒbƒZ[ƒW‚ª‚È‚¯‚ê‚Î‰½‚à‚µ‚È‚¢
+        # ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒãªã‘ã‚Œã°ä½•ã‚‚ã—ãªã„
         if not msg:
             break  
 
-        # uqv‚Åƒ\ƒPƒbƒg’ÊMI—¹
+        # ã€Œqã€ã§ã‚½ã‚±ãƒƒãƒˆé€šä¿¡çµ‚äº†
         if 'q' in msg:
             print ('QUIT...')
             sock.close()  
             break
 
-        # ƒf[ƒ^‚ğ‘—M
+        # ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡
         msg = msg.encode(encoding="utf-8") 
         sent = sock.sendto(msg, TELLO_ADDRESS)
 
