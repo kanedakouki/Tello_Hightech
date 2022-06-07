@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 # 参考サイト: https://techacademy.jp/magazine/41018
 
 import socket as sk
