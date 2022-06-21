@@ -1,9 +1,12 @@
 ﻿# -*- coding:utf-8 -*-
 # 参考先Web: https://algorithm.joho.info/programming/python/tello-python-command/
+# コマンドの一覧はこの参照先をご覧ください
 
 import threading 
 import socket
-
+import cv2
+import time
+import numpy as np
 
 # Telloからのレスポンス受信
 def udp_receiver():
@@ -16,16 +19,27 @@ def udp_receiver():
             print ('\nExit . . .\n')
             break
 
+My_ip = socket.gethostbyname(socket.gethostname())
 # Tello側のローカルIPアドレス(デフォルト)、宛先ポート番号(コマンドモード用)
 TELLO_IP = '192.168.10.1'
 TELLO_PORT = 8889
 TELLO_ADDRESS = (TELLO_IP, TELLO_PORT)
 
+# Telloからの映像受信用のローカルIPアドレス、宛先ポート番号
+TELLO_CAMERA_ADDRESS = 'udp://@0.0.0.0:11111'
+
+# キャプチャ用のオブジェクト
+cap = None
+
+# データ受信用のオブジェクト備
+response = None
+
 # UDP通信ソケットの作成
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # 自ホストで使用するIPアドレスとポート番号を設定
-sock.bind(('', TELLO_PORT))
+sock.bind((My_ip, 8888))
+#192.168.10.2 TELLO_PORT
 
 # 受信用スレッドの作成
 thread  = threading.Thread(target=udp_receiver)
