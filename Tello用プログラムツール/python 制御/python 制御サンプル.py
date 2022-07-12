@@ -3,7 +3,6 @@
 import threading 
 import socket
 
-
 # Telloからのレスポンス受信
 def udp_receiver():
     count = 0
@@ -23,8 +22,12 @@ TELLO_ADDRESS = (TELLO_IP, TELLO_PORT)
 # UDP通信ソケットの作成
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
+My_IP = socket.gethostbyname(socket.gethostname())
+My_PORT = 8889
+My_ADD = (My_IP,My_PORT)
+
 # 自ホストで使用するIPアドレスとポート番号を設定
-sock.bind(('0.0.0.0', 8883))
+sock.bind(My_ADD)
 
 # 受信用スレッドの作成
 thread  = threading.Thread(target=udp_receiver)

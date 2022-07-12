@@ -3,12 +3,16 @@
 
 import socket as sk
 
-# 送信側アドレス設定
-#              (IP,ポート番号)
-UserAddr = ('127.0.0.1',11111)
+# gethostname で自身の「デバイス名」を取得し、
+# gethostbyname で入力された「デバイス名」の「IPアドレス」を取得する。
+My_IP = sk.gethostbyname(sk.gethostname())
 
-# 受信側アドレス設定
-#                 (IP,ポート番号)
+# 送信側アドレス設定（ユーザー側）
+#           　   (IP,ポート番号)
+UserAddr = (My_IP,11111)
+
+# 受信側アドレス設定（Tello側）
+#              　 (IP,ポート番号)
 TelloAddr = ('192.168.10.1',8889)
 
 # ソケット作成
